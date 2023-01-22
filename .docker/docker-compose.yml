@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  captcha_solver:
+    container_name: 'CaptchaSolver'
+    build:
+      context: .
+    ports:
+      - 54521:54521
+    volumes:
+      - ..:/home/volume
+      - captcha-solver-bashhistory:/commandhistory
+    env_file:
+      - ../.envs/aws.env
+      - ../.envs/sls.env
+      - ../.envs/config.env
+    working_dir: /home/volume
+    restart: unless-stopped
+    command:
+      - /bin/sh
+      - -c
+      - sleep infinity
+
+volumes:
+  captcha-solver-bashhistory:

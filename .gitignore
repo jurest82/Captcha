@@ -1,0 +1,9 @@
+*.pyc
+*.vscode
+*.DS_Store
+.pytest_cache/
+.coverage
+htmlcov/
+__pycache__
+*.pth
+python/
