@@ -29,8 +29,6 @@ resources:
 functions:
   - ${file(functions.yml)}
 
-layers: ${file(layers.yml)}
-
 plugins:
   - serverless-deployment-bucket
   - '@serverless/safeguards-plugin'

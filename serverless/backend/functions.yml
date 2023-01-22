@@ -16,6 +16,3 @@ Solver:
           - prefix: captchas/
           - suffix: captcha_to_solve.png
         existing: true
-  layers:
-    - !Ref PandasLambdaLayer
-    - !Ref CommonsLambdaLayer
