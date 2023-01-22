@@ -1,0 +1,18 @@
+Resources:
+  Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: ${self:custom.s3.bucketName.${self:custom.stage}}
+      LifecycleConfiguration:
+        Rules:
+          - Id: ${self:custom.servicePrefix}-BucketR0
+            Prefix: captchas/
+            Transitions:
+              - StorageClass: INTELLIGENT_TIERING
+                TransitionInDays: 5
+            Status: Enabled
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: True
+        IgnorePublicAcls: True
+        BlockPublicPolicy: True
+        RestrictPublicBuckets: True

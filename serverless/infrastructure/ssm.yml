@@ -1,0 +1,15 @@
+Resources:
+  BucketArn:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub /${self:custom.servicePrefix}/BucketArn
+      Tier: Standard
+      Type: String
+      Value: !GetAtt Bucket.Arn
+  BucketName:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub /${self:custom.servicePrefix}/BucketName
+      Tier: Standard
+      Type: String
+      Value: !Ref Bucket
