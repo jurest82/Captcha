@@ -1,0 +1,21 @@
+Solver:
+  name: ${self:custom.servicePrefix}-Solver
+  package:
+    patterns:
+      - '!./**'
+      - ../../src/functions/solver.py
+  handler: src/functions/solver.handler
+  role: !GetAtt SolverRole.Arn
+  memorySize: 3000
+  timeout: 200
+  events:
+    - s3:
+        bucket: ${self:custom.s3.bucket.name}
+        event: s3:ObjectCreated:*
+        rules: 
+          - prefix: captchas/
+          - suffix: captcha_to_solve.png
+        existing: true
+  layers:
+    - !Ref PandasLambdaLayer
+    - !Ref CommonsLambdaLayer

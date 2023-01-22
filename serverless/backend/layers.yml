@@ -1,0 +1,15 @@
+Pandas:
+  name: ${self:custom.servicePrefix}-Pandas
+  package:
+    patterns:
+      - '!./**'
+      - python/**
+  path: ../../src/layers/pandas
+
+Commons:
+  name: ${self:custom.servicePrefix}-Commons
+  package:
+    patterns:
+      - '!./**'
+      - python/**
+  path: ../../src/layers/commons

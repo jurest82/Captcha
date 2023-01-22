@@ -1,0 +1,63 @@
+org: azimutenergia
+app: custom-applications
+service: captcha-solver-backend
+frameworkVersion: ^3.21.0
+configValidationMode: error
+
+provider:
+  name: aws
+  runtime: python3.9
+  stage: dev
+  region: us-east-1
+  stackName: ${self:app}-${self:service}
+  memorySize: 128
+  timeout: 10
+  deploymentBucket:
+    name: ${self:custom.s3.deploymentBucketName.${self:custom.stage}}
+  environment:
+    BUCKET_NAME: ${self:custom.s3.bucket.name}
+
+package:
+  patterns:
+    - '!./**'
+    - '../../src/utilities/*'
+  individually: true
+
+resources:
+  - ${file(iam.yml)}
+
+functions:
+  - ${file(functions.yml)}
+
+layers: ${file(layers.yml)}
+
+plugins:
+  - serverless-deployment-bucket
+  - '@serverless/safeguards-plugin'
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  developer: ${env:DEVELOPER}
+  servicePrefix: ${self:app}-${self:service}
+  safeguards:
+    - safeguard: allowed-runtimes
+      config:
+        - ${self:provider.runtime}
+    - safeguard: framework-version
+      enforcementLevel: warning
+      config: ${self:frameworkVersion}
+    - safeguard: allowed-regions
+      enforcementLevel: error
+      config:
+        - ${self:provider.region}
+    - safeguard: allowed-function-names
+      enforcementLevel: warning
+      config: ${self:custom.servicePrefix}-${FUNCTION}
+  s3:
+    deploymentBucketName:
+      dev: ${self:provider.region}.azmte.cptchslvr.${self:custom.stage}.${self:custom.developer}.deploys
+      test: ${self:provider.region}.azmte.cptchslvr.${self:custom.stage}.deploys
+      prod: ${self:provider.region}.azmte.cptchslvr.${self:custom.stage}.deploys
+    bucket:
+      arn: ${ssm:/${self:app}-captcha-solver-infrastructure/BucketArn}
+      name: ${ssm:/${self:app}-captcha-solver-infrastructure/BucketName}
