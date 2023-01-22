@@ -5,9 +5,6 @@
   - [Setup](#setup)
     - [Development container](#development-container)
     - [Environment variables](#environment-variables)
-  - [Execution](#execution)
-  - [Testing](#testing)
-  - [Technical documentation](#technical-documentation)
   - [Contribution guidelines](#contribution-guidelines)
     - [Code review](#code-review)
     - [Other guidelines](#other-guidelines)
@@ -19,7 +16,7 @@
 
 ## Summary
 
-`Captcha`: repository contains a software stack that allows solver captchas using AWS Textract.
+`Captcha`: repository contains a software stack that allows solve captchas using AWS Textract.
 
 ## Setup
 
