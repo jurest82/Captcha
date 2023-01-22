@@ -28,3 +28,7 @@ Resources:
                   - s3:GetObject
                   - s3:DeleteObject
                 Resource: ${self:custom.s3.bucket.arn}/*
+              - Effect: Allow
+                Action:
+                  - textract:DetectDocumentText
+                Resource: '*'
